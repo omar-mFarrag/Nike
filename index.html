@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nike</title>
+    <!-- FontAwesome css style sheet -->
+    <link rel="stylesheet" href="./css/all.min.css">
+    <!-- Master css style sheet -->
+    <link rel="stylesheet" href="./css/master.css">
+    <link rel="stylesheet" href="./css/floating-items.css">
+    <!-- Google fonts link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;0,1000;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900;1,1000&display=swap" rel="stylesheet">
+</head>
+<body id="body">
+    <header id="header">
+        <div class="container">
+            <div id="minuButton" onclick="minuView();" class="mega-minu">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+            <a class="logo" href="#"><h2>Nike</h2></a>
+            <nav id="minu">
+                <a onclick="minuView();" href="#home">Home</a>
+                <a onclick="minuView();" href="#products">Products</a>
+                <a onclick="minuView();" href="#featured">Featured</a>
+                <a onclick="minuView();" href="#review">Review</a>
+            </nav>
+            <div class="icons">
+                <i class="fa-solid fa-heart"  id="fave-icon"></i>
+                <i class="fa-solid fa-cart-shopping" onclick="openCart();" id="cart-icon"><span id="cart-counter">0</span></i>
+                <i class="fa-solid fa-user" onclick="openProfile();" id="profile-icon"></i>
+            </div>
+            <!-- login page -->
+            <div class="login-page-container" id="login-page-container">
+                <div class="login-page">
+                    <div class="login-page-header">
+                        <span id="login-word">Log in</span>
+                        <span></span>
+                        <span id="signUp-word">Sign up</span>
+                    </div>
+                    <div id="login-signup-content" class="login-signup-content">
+                        <div class="login-form" id="login-form" action="">
+                            <input id="email-in-login" class="inputs" type="email" placeholder="Email">
+                            <input id="password-in-login" class="inputs" type="password" placeholder="Password">
+                            <button class="submit">Log in</button>
+                        </div>
+                        <div class="signUp-form" id="signUp-form" action="">
+                            <div class="profile-pic">
+                                <label id="chagePhoto" class="-label" for="file">
+                                    <span class="glyphicon glyphicon-camera"></span>
+                                    <span>Add <br> Image</span>
+                                </label>
+                                <input id="file" type="file" onchange="loadFile(event)"/>
+                                <img src="./images/profileTest.jpg" id="output" width="600" />
+                            </div>
+                            <div class="name-inputs">
+                                <input style="text-transform: capitalize;" id="frist-name" class="inputs" type="text" placeholder="Frist Name">
+                                <input style="text-transform: capitalize;" id="second-name" class="inputs" type="text" placeholder="Last Name">
+                            </div>
+                            <input id="signUp-email" type="email" class="inputs" placeholder="example@gmail.com">
+                            <input id="signUp-password" class="inputs" type="password" placeholder="Password">
+                            <input id="signUp-phone-number" class="inputs" type="number" placeholder="Phone">
+                            <button onclick="signUp()" class="submit">Sign Up</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Favorites menu -->
+            <div class="fave-list-container" id="fave-list-container">
+                <div class="favorites">
+                    <div class="fave-list-header">
+                        <h2><span style="color: var(--main-orange);">F</span>avorites</h2>
+                        <i id="fave-list-closer" class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="fave-list" id="fave-list">
+                    </div>
+                </div>
+            </div>
+            <!-- Cart -->
+            <div class="cart-container" id="cart-container">
+                <div class="cart">
+                    <div class="cart-header">
+                        <h2><span style="color: var(--main-orange);">C</span>art</h2>
+                        <i id="cart-closer" class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="cart-list" id="cart-list">
+                        
+                    </div>
+                    <div class="cart-footer">
+                        <div class="totalPriceInCart">
+                            <span id="totalInCart"></span>
+                        </div>
+                        <button onclick="ClearCart()">CHECKOUT</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Profile -->
+            <div class="profile-container" id="profile-container">
+                <div class="profile">
+                    <div class="profile-header">
+                        <h2><span style="color: var(--main-orange);">P</span>rofile</h2>
+                        <i id="profile-closer" class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="profile-content" id="profile-content">
+                        <div class="profile-image">
+                            <img id="image-in-profile" src="./images/profileTest.jpg" alt="">
+                        </div>
+                        <h2 id="porfile-user-name" class="user-name"><span style="color: var(--main-orange);">U</span>ser <span style="color: var(--main-orange);">N</span>ame</h2>
+                        <div class="profile-info">
+                            <p class="profile-email" id="profile-email"><span style="color: var(--main-orange);">email</span>: omar.madridista1902@gmail.com</p>
+                            <p class="profile-phone" id="profile-phone"><span style="color: var(--main-orange);">Phone Number</span>: 01114532787</p>
+                            <p class="address"><span style="color: var(--main-orange);">Address</span>: You're in my heart<i style="color: var(--main-orange);" class="fa-solid fa-heart"></i></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- By method -->
+            <div class="by-method-container" id="by-method-container">
+                <div class="by-method-content">
+                    <div class="by-methode-header">
+                        <h2 id="shoes-name">Nike Shoes</h2>
+                        <i onclick="bayMethodClose();" id="by-method-closer" class="fa-solid fa-xmark"></i>
+                    </div>
+                    <div class="prod-bying">
+                        <img id="bying-prod-image" src="./images/product-1.png" alt="">
+                        <span id="price"></span>
+                        <div class="select-size">
+                            <span>EU</span>
+                            <span onclick="selectSize(this)" class="activeSize">38</span>
+                            <span onclick="selectSize(this)">39</span>
+                            <span onclick="selectSize(this)">40</span>
+                            <span onclick="selectSize(this)">41</span>
+                            <span onclick="selectSize(this)">42</span>
+                            <span onclick="selectSize(this)">43</span>
+                        </div>
+                        <div class="select-amount">
+                            <i id="amountMinus" class="fa-solid fa-minus" onclick="amountMinus()"></i>
+                            <span id="amount"> 1 </span>
+                            <i class="fa-solid fa-plus" onclick="amountPlus()"></i>
+                        </div>
+                    </div>
+                    <div class="by-method-action">
+                        <button id="by-and-continuation">ADD AND CONTINUE SHOPPING</button>
+                        <button id="by-and-go-to-cart">ADD AND CHECKOUT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <section class="landing" id="home">
+        <div onclick="prevLanding()" class="desktop-arrow left-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+        <div id="landing-info" class="info">
+            <h3 id="shoes-color" >Nike Red Shoes</h3>
+            <h2>Nike Metcon Shoes</h2>
+            <p>Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit. 
+                Repellat Maiores Et Eos Eaque Veritatis Aut Laboriosam 
+                Earum Dolorem Iste Atque.</p>
+            <a href="#products"><button>Discover Now</button></a>
+        </div>
+        <div class="images-container">
+            <div onclick="prevLanding()" class="phone-arrow left-arrow"><i class="fa-solid fa-chevron-left"></i></div>
+            <div class="images">
+                <img id="landing-shoes" class="landing-shoes" src="./images/home-shoe-1.png" alt="">
+                <img id="landing-text" class="landing-text" src="./images/home-text-1.png" alt="">
+            </div>
+            <div onclick="nextLanding()" class="phone-arrow right-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+        </div>
+        <div onclick="nextLanding()" class="desktop-arrow right-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+    </section>
+
+    <section class="services">
+        <div class="container">
+            <div class="delivery">
+                <i class="fa-solid fa-truck"></i>
+                <h3>Fast Delivery</h3>
+                <p>Lorem Ipsum Dolor Sit, Amet Consectetur Adipisicing Elit. Illum, Fugit.</p>
+            </div>
+            <div class="replacements">
+                <i class="fa-solid fa-rotate-left"></i>
+                <h3>Fast Delivery</h3>
+                <p>Lorem Ipsum Dolor Sit, Amet Consectetur Adipisicing Elit. Illum, Fugit.</p>
+            </div>
+            <div class="support">
+                <i class="fa-solid fa-headset"></i>
+                <h3>Fast Delivery</h3>
+                <p>Lorem Ipsum Dolor Sit, Amet Consectetur Adipisicing Elit. Illum, Fugit.</p>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section id="products">
+        <h1 class="main-header"><span>LATEST </span>PRODUCTS</h1>
+        <div class="container">
+            <div class="box">
+                <div class="hover-items">
+                    <i class="fa-solid fa-heart fave"></i>
+                    <i class="fa-solid fa-share"></i>
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <img src="./images/product-1.png" alt="">
+                <h4>Nike Shoes</h4>
+                <span >$120.99 <span>$150.99</span></span>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+                <button value="nikeShoes" class="add-to-cart">Add To Cart</button>
+            </div>
+            <div class="box">
+                <div class="hover-items">
+                    <i class="fa-solid fa-heart fave"></i>
+                    <i class="fa-solid fa-share"></i>
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <img src="./images/product-2.png" alt="">
+                <h4>Nike Shoes</h4>
+                <span>$120.99 <span>$150.99</span></span>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+                <button value="nikeShoes" class="add-to-cart">Add To Cart</button>
+            </div>
+            <div class="box">
+                <div class="hover-items">
+                    <i class="fa-solid fa-heart fave"></i>
+                    <i class="fa-solid fa-share"></i>
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <img src="./images/product-3.png" alt="">
+                <h4>Nike Shoes</h4>
+                <span>$120.99 <span>$150.99</span></span>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+                <button value="nikeShoes" class="add-to-cart">Add To Cart</button>
+            </div>
+            <div class="box">
+                <div class="hover-items">
+                    <i class="fa-solid fa-heart fave"></i>
+                    <i class="fa-solid fa-share"></i>
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <img src="./images/product-4.png" alt="">
+                <h4>Nike Shoes</h4>
+                <span>$120.99 <span>$150.99</span></span>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+                <button value="nikeShoes" class="add-to-cart">Add To Cart</button>
+            </div>
+            <div class="box">
+                <div class="hover-items">
+                    <i class="fa-solid fa-heart fave"></i>
+                    <i class="fa-solid fa-share"></i>
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <img src="./images/product-5.png" alt="">
+                <h4>Nike Shoes</h4>
+                <span>$120.99 <span>$150.99</span></span>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+                <button value="nikeShoes" class="add-to-cart">Add To Cart</button>
+            </div>
+            <div class="box">
+                <div class="hover-items">
+                    <i class="fa-solid fa-heart fave"></i>
+                    <i class="fa-solid fa-share"></i>
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+                <img src="./images/product-6.png" alt="">
+                <h4>Nike Shoes</h4>
+                <span>$120.99 <span>$150.99</span></span>
+                <div class="stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-regular fa-star"></i>
+                </div>
+                <button value="nikeShoes" class="add-to-cart">Add To Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="featured" class="featured">
+        <h1 class="main-header"><span>FEATURED </span>PRODUCTS</h1>
+        <div class="featured container">
+            <div class="box">
+                <div class="feat-images">
+                    <div class="feat-image-selectors">
+                        <div class="feat-image-selector active">
+                            <img src="./images/f-img-1.1.png" alt="">
+                        </div>
+                        <div class="feat-image-selector">
+                            <img src="./images/f-img-1.2.png" alt="">
+                        </div>
+                        <div class="feat-image-selector">
+                            <img src="./images/f-img-1.3.png" alt="">
+                        </div>
+                        <div class="feat-image-selector">
+                            <img src="./images/f-img-1.4.png" alt="">
+                        </div>
+                    </div>
+                    <img id="main-feat-prod" src="./images/f-img-1.1.png" alt="">
+                </div>
+                <div class="feat-info">
+                    <div class="feat-info-text">
+                        <h3>New Nike Airmax Shoes</h3>
+                        <div class="feat-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                        <p>
+                            Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit. 
+                            Dicta Facilis Praesentium Odit Voluptas Illum Iure Libero Quis Fuga Commodi. 
+                            Autem.
+                        </p>
+                        <span>$80.99 <span>$120.99</span></span>
+                    </div>
+                    <button value="airMax" class="add-to-cart">Add To Cart</button>
+                </div>
+            </div>
+            <div class="box">
+                <div class="feat-images">
+                    <div class="feat-image-selectors">
+                        <div class="feat-image-selector active">
+                            <img src="./images/f-img-2.1.png" alt="">
+                        </div>
+                        <div class="feat-image-selector">
+                            <img src="./images/f-img-2.2.png" alt="">
+                        </div>
+                        <div class="feat-image-selector">
+                            <img src="./images/f-img-2.3.png" alt="">
+                        </div>
+                        <div class="feat-image-selector">
+                            <img src="./images/f-img-2.4.png" alt="">
+                        </div>
+                    </div>
+                    <img id="main-feat-prod" src="./images/f-img-2.1.png" alt="">
+                </div>
+                <div class="feat-info">
+                    <div class="feat-info-text">
+                        <h3>New Nike Airmax Shoes</h3>
+                        <div class="feat-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                        <p>
+                            Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit. 
+                            Dicta Facilis Praesentium Odit Voluptas Illum Iure Libero Quis Fuga Commodi. 
+                            Autem.
+                        </p>
+                        <span>$80.99 <span>$120.99</span></span>
+                    </div>
+                    <button value="airMax" class="add-to-cart">Add To Cart</button>
+                </div>
+            </div>
+            <div class="box">
+                <div class="feat-images">
+                    <div class="feat-image-selectors">
+                        <div class="feat-image-selector active">
+                            <img src="./images/f-img-3.1.png" alt="">
+                        </div>
+                        <div class="feat-image-selector">
+                            <img src="./images/f-img-3.2.png" alt="">
+                        </div>
+                        <div class="feat-image-selector">
+                            <img src="./images/f-img-3.3.png" alt="">
+                        </div>
+                        <div class="feat-image-selector">
+                            <img src="./images/f-img-3.4.png" alt="">
+                        </div>
+                    </div>
+                    <img id="main-feat-prod" src="./images/f-img-3.1.png" alt="">
+                </div>
+                <div class="feat-info">
+                    <div class="feat-info-text">
+                        <h3>New Nike Airmax Shoes</h3>
+                        <div class="feat-stars">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                        <p>
+                            Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit. 
+                            Dicta Facilis Praesentium Odit Voluptas Illum Iure Libero Quis Fuga Commodi. 
+                            Autem.
+                        </p>
+                        <span>$80.99 <span>$120.99</span></span>
+                    </div>
+                    <button value="airMax" class="add-to-cart">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+    <section class="links">
+        <div class="container">
+            <div class="box-container">
+                <div class="credit">
+                    <p>
+                        Created By <span> Omar Mustafa </span>
+                    </p>
+                    <div class="my-social">
+                        <a target="_blank" href="https://www.instagram.com/omar_mfarrag/"><i class="fa-brands fa-instagram"></i></a>
+                        <a target="_blank" href="https://wa.me/qr/UUVETNHRTHTSM1"><i class="fa-brands fa-whatsapp"></i></a>
+                        <a target="_blank" href="https://github.com/omar-mFarrag"><i class="fa-brands fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="./script.js"></script>
+</body>
+</html>
