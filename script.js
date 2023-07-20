@@ -2,15 +2,15 @@
 var minuButton = document.getElementById('minuButton');
 var minu = document.getElementById('minu');
 var minuViewCounter = 1;
-function minuView() {
+function minuView(ele) {
     if (document.getElementById('header').offsetWidth < 767) {
         minuViewCounter++;
         if ((minuViewCounter % 2) === 0) {
             minu.style.transform = "translateX(0px)";
-            minuButton.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
+            ele.children[0].className = 'fa-solid fa-xmark change-color';
         } else {
             minu.style.transform = "translateX(-100%)";
-            minuButton.innerHTML = `<i class="fa-solid fa-bars"></i>`;
+            ele.children[0].className = 'fa-solid fa-bars change-color';
         }
     }
 }
@@ -30,7 +30,11 @@ var canChangeLanding = true;
 function landingItemsChanger() {
     shoesColor.innerHTML = `Nike ${landingShoesColors[landingCounter - 1]} Shoes`;
     landingShoes.src = `./images/home-shoe-${landingCounter}.png`;
-    landingText.src = `./images/home-text-${landingCounter}.png`;
+    if (IsDark) {
+        landingText.src = `./images/home-text-${landingCounter}-dark.png`;
+    }else{
+        landingText.src = `./images/home-text-${landingCounter}-light.png`;
+    }
 }
 function landingAnimations() {
     landingText.style.opacity = `0`;
@@ -122,12 +126,12 @@ var profileCloser = document.getElementById('profile-closer');
 const profileContainer = document.getElementById('profile-container');
 document.getElementById('profile-container').style.width = `${browserWidth}px`;
 
-proflieIcon.onclick = () => {
-    profileContainer.style.display = "flex";
-}
-profileCloser.onclick = () => {
-    profileContainer.style.display = "none";
-}
+// proflieIcon.onclick = () => {
+//     profileContainer.style.display = "flex";
+// }
+// profileCloser.onclick = () => {
+//     profileContainer.style.display = "none";
+// }
 
 
 // This part for add favourites product in favorites menu
@@ -175,16 +179,15 @@ function clickedPord(element) {
     if (favoritedProducts.length > 0) {
         for (let index = 0; index < favoritedProducts.length; index++) {
             faveList.innerHTML += `
-    
-            <div id="prod-${favoritedProducts[index] + 1}" class="box">
+            <div id="prod-${favoritedProducts[index] + 1}" class="box change-box-background-color change-box-border-color">
                 <div class="hover-items">
                     <i class="fa-solid fa-heart added" onclick="remove(this)" ></i>
                     <i class="fa-solid fa-share"></i>
                     <i class="fa-solid fa-eye"></i>
                 </div>
                 <img src="./images/product-${favoritedProducts[index] + 1}.png" alt="">
-                <h4>Nike Shoes</h4>
-                <span>$120.99 <span>$150.99</span></span>
+                <h4 class="change-color">Nike Shoes</h4>
+                <span class="change-color">$120.99 <span>$150.99</span></span>
                 <div class="stars">
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-solid fa-star"></i>
@@ -192,7 +195,7 @@ function clickedPord(element) {
                     <i class="fa-solid fa-star"></i>
                     <i class="fa-regular fa-star"></i>
                 </div>
-                <button onclick="OpenBuyFromFave(this);">Add To Cart</button>
+                <button onclick="OpenBuyFromFave(this);" class=" add-to-cart change-color change-box-background-color change-border-color">Add To Cart</button>
             </div>
             `;
         }
@@ -218,12 +221,23 @@ function remove(element) {
 
 // This function created by this JS file with (window.onload function)
 function chageFeat(photo) {
-    var x = photo.children[0].src;
-    photo.parentElement.parentElement.children[1].src = x;
-    for (let i = 0; i < photo.parentElement.children.length; i++) {
-        photo.parentElement.children[i].classList.remove('active');
+    if (IsDark) {
+        var x = photo.children[0].src;
+        photo.parentElement.parentElement.children[1].src = x;
+        for (let i = 0; i < photo.parentElement.children.length; i++) {
+            photo.parentElement.children[i].classList.remove('active-dark');
+            photo.parentElement.children[i].classList.remove('active-light');
+        }
+        photo.classList.add('active-dark');
+    }else{
+        var x = photo.children[0].src;
+        photo.parentElement.parentElement.children[1].src = x;
+        for (let i = 0; i < photo.parentElement.children.length; i++) {
+            photo.parentElement.children[i].classList.remove('active-light');
+            photo.parentElement.children[i].classList.remove('active-dark');
+        }
+        photo.classList.add('active-light');
     }
-    photo.classList.add('active');
 }
 
 
@@ -280,13 +294,20 @@ function bayingProd(element) {
 
 
 
-// to select size funtion
+// to select size function
 function selectSize(size) {
     for (let i = 0; i < size.parentElement.children.length; i++) {
         size.parentElement.children[i].classList.remove('activeSize')
     }
+    for (let i = 1; i < size.parentElement.children.length; i++) {
+        if (IsDark) {
+            size.parentElement.children[i].style.color = 'whitesmoke'
+        }else{
+            size.parentElement.children[i].style.color = 'var(--main-black)'
+        }
+    }
     size.classList.add('activeSize')
-
+    size.style.color = 'var(--main-orange)'
     sizeSelected = size.innerHTML;
 }
 // To control amount
@@ -364,16 +385,16 @@ function addProdInCart() {
 
     cartList.innerHTML +=
         `
-    <div class="prodBuoght">
+    <div class="prodBuoght change-background-color change-box-border-color">
         <div class="imageAndInfo">
             <img src="${buyingProdImage.src}" alt="">
             <div class="prodBoughtInfo">
-                <span>${prodName}</span>
-                <span>Size: ${sizeSelected}</span>
-                <span>Price: $${totalPrice} <span>${amountOnBayment.innerHTML}x $${prodPrice}</span></span>
+                <span class="change-color">${prodName}</span>
+                <span class="change-color">Size: ${sizeSelected}</span>
+                <span class="change-color">Price: $${totalPrice} <span>${amountOnBayment.innerHTML}x $${prodPrice}</span></span>
             </div>
         </div>
-        <i class="fa-solid fa-trash-can" onclick="removeFormCart(this)"></i>
+        <i onmouseenter="mouseenterontrush(this)" onmouseleave="mouseleaveontrush(this)" class="fa-solid fa-trash-can change-color" id="remove-from-cart" onclick="removeFormCart(this)"></i>
     </div>
     `;
 
@@ -579,3 +600,335 @@ setInterval(() => {
         }
     }
 }, 1);
+
+// Tihs part for make scroll to top buttom
+document.getElementById('scroll-to-top').onclick =  () => {
+    document.getElementById('scroll-to-top').style.display = 'none';
+}
+
+document.onscroll = () => {
+    if (scrollY >= 1069.2000732421875) {
+        document.getElementById('scroll-to-top').style.display = 'flex';
+    }else{
+        document.getElementById('scroll-to-top').style.display = 'none';
+    }
+}
+
+
+
+// Dark mode
+var IsDark = false;
+const allColorChanges = document.getElementsByClassName('change-color');
+const allBackgroundColorChanges = document.getElementsByClassName('change-background-color');
+const hoveringItems = document.getElementsByClassName('hovering');
+const allBorderColorChange = document.getElementsByClassName('change-border-color');
+const allShadowsChange = document.getElementsByClassName('change-shadows');
+const allBoxsBorder = document.getElementsByClassName('change-box-border-color');
+const allBoxsBackgroundColor = document.getElementsByClassName('change-box-background-color');
+const hoverButton = document.getElementsByClassName('hover-button');
+const featSSelectors = document.getElementsByClassName('feat-image-selector');
+const containerColor = document.getElementsByClassName('change-container-color');
+
+document.getElementById('display-mode').addEventListener("click", function () {
+    if(this.className === "fa-solid fa-moon change-color hovering"){
+        this.className = "fa-solid fa-sun change-color hovering";
+        // now is dark mode
+        IsDark = true;
+        document.head.children[4].innerHTML = `
+        ::-webkit-scrollbar-track {
+            background-color: var(--main-dark);
+            padding: 20px;
+        }`;
+        landingText.src = `./images/home-text-${landingCounter}-dark.png`;
+        for (let i = 0; i < allColorChanges.length; i++) {
+            allColorChanges[i].style.color = 'whitesmoke';
+        }
+        for (let i = 0; i < allBackgroundColorChanges.length; i++) {
+            allBackgroundColorChanges[i].style.backgroundColor = 'var(--main-dark)';
+        }
+        for (let i = 0; i < allBorderColorChange.length; i++) {
+            allBorderColorChange[i].style.borderColor = 'whitesmoke';
+        }
+        for (let i = 0; i < allShadowsChange.length; i++) {
+            allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px rgb(43, 43, 43)';
+        }
+        for (let i = 0; i < allBoxsBorder.length; i++) {
+            allBoxsBorder[i].style.borderColor = '#777';
+        }
+        for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
+            allBoxsBackgroundColor[i].style.backgroundColor = '#272727';
+        }
+        for (let i = 0; i < featSSelectors.length; i++) {
+            if(featSSelectors[i].classList.contains('active-light')){
+                featSSelectors[i].classList.remove('active-light')
+                featSSelectors[i].classList.add('active-dark')
+            }
+        }
+        for (let i = 0; i < containerColor.length; i++) {
+            containerColor[i].style.backgroundColor = 'rgb(51 51 51 / 82%)';
+        }
+    }else{
+        this.className = "fa-solid fa-moon change-color hovering";
+        // now is light mode
+        IsDark = false;
+        document.head.children[4].innerHTML = `
+        ::-webkit-scrollbar-track {
+            background-color: white;
+            padding: 20px;
+        }`;
+        landingText.src = `./images/home-text-${landingCounter}-light.png`;
+        for (let i = 0; i < allColorChanges.length; i++) {
+            allColorChanges[i].style.color = 'var(--main-black)';
+        }
+        for (let i = 0; i < allBackgroundColorChanges.length; i++) {
+            allBackgroundColorChanges[i].style.backgroundColor = 'white';
+        }
+        for (let i = 0; i < allBorderColorChange.length; i++) {
+            allBorderColorChange[i].style.borderColor = 'var(--main-black)';
+        }
+        for (let i = 0; i < allShadowsChange.length; i++) {
+            allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px whitesmoke';
+        }
+        for (let i = 0; i < allBoxsBorder.length; i++) {
+            allBoxsBorder[i].style.borderColor = '';
+        }
+        for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
+            allBoxsBackgroundColor[i].style.backgroundColor = 'var(--main-gray)';
+        }
+        for (let i = 0; i < featSSelectors.length; i++) {
+            if(featSSelectors[i].classList.contains('active-dark')){
+                featSSelectors[i].classList.remove('active-dark')
+                featSSelectors[i].classList.add('active-light')
+            }
+        }
+        for (let i = 0; i < containerColor.length; i++) {
+            containerColor[i].style.backgroundColor = 'rgba(255, 255, 255, 0.699)';
+        }
+    }
+})
+
+for (let i = 0; i < hoveringItems.length; i++) {
+    hoveringItems[i].onmouseenter = function () {
+        this.style.color = 'var(--main-orange)';
+    }
+    hoveringItems[i].onmouseleave = function () {
+        if (IsDark) {
+            this.style.color = 'white';
+        }else{
+            this.style.color = 'var(--main-black)';
+        }
+    }
+}
+
+for (let i = 0; i < hoverButton.length; i++) {
+    hoverButton[i].onmouseenter = function () {
+        if (IsDark) {
+            this.style.backgroundColor = 'var(--main-orange)';
+            this.style.borderColor = 'var(--main-orange)';
+        }else{
+            this.style.backgroundColor = 'var(--main-orange)';
+            this.style.color = 'white';
+        }
+    }
+    hoverButton[i].onmouseleave = function () {
+        if (IsDark) {
+            this.style.backgroundColor = '#272727';
+            this.style.borderColor = '#777';
+        }else{
+            this.style.backgroundColor = 'var(--main-gray)';
+            this.style.color = 'var(--main-back)';
+        }
+    }
+}
+
+// to active dark mode on items in fave menu after click on fave icon
+document.getElementById('fave-icon').addEventListener("click", function () {
+    if (IsDark) {
+        for (let i = 0; i < allColorChanges.length; i++) {
+            allColorChanges[i].style.color = 'whitesmoke';
+        }
+        for (let i = 0; i < allBackgroundColorChanges.length; i++) {
+            allBackgroundColorChanges[i].style.backgroundColor = 'var(--main-dark)';
+        }
+        for (let i = 0; i < allBorderColorChange.length; i++) {
+            allBorderColorChange[i].style.borderColor = 'whitesmoke';
+        }
+        for (let i = 0; i < allShadowsChange.length; i++) {
+            allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px rgb(43, 43, 43)';
+        }
+        for (let i = 0; i < allBoxsBorder.length; i++) {
+            allBoxsBorder[i].style.borderColor = '#777';
+        }
+        for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
+            allBoxsBackgroundColor[i].style.backgroundColor = '#272727';
+        }
+        for (let i = 0; i < featSSelectors.length; i++) {
+            if(featSSelectors[i].classList.contains('active-light')){
+                featSSelectors[i].classList.remove('active-light')
+                featSSelectors[i].classList.add('active-dark')
+            }
+        }
+        for (let i = 0; i < containerColor.length; i++) {
+            containerColor[i].style.backgroundColor = 'rgb(51 51 51 / 82%)';
+        }
+    }else{
+        for (let i = 0; i < allColorChanges.length; i++) {
+            allColorChanges[i].style.color = 'var(--main-black)';
+        }
+        for (let i = 0; i < allBackgroundColorChanges.length; i++) {
+            allBackgroundColorChanges[i].style.backgroundColor = 'white';
+        }
+        for (let i = 0; i < allBorderColorChange.length; i++) {
+            allBorderColorChange[i].style.borderColor = 'var(--main-black)';
+        }
+        for (let i = 0; i < allShadowsChange.length; i++) {
+            allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px whitesmoke';
+        }
+        for (let i = 0; i < allBoxsBorder.length; i++) {
+            allBoxsBorder[i].style.borderColor = '';
+        }
+        for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
+            allBoxsBackgroundColor[i].style.backgroundColor = 'var(--main-gray)';
+        }
+        for (let i = 0; i < featSSelectors.length; i++) {
+            if(featSSelectors[i].classList.contains('active-dark')){
+                featSSelectors[i].classList.remove('active-dark')
+                featSSelectors[i].classList.add('active-light')
+            }
+        }
+        for (let i = 0; i < containerColor.length; i++) {
+            containerColor[i].style.backgroundColor = 'rgba(255, 255, 255, 0.699)';
+        }
+    }
+})
+
+
+function mouseenterontrush(ele) {
+    ele.style.color = 'var(--main-red)';
+}
+function mouseleaveontrush(ele) {
+    if (IsDark) {
+        ele.style.color = 'whitesmoke';
+    }else{
+        ele.style.color = 'var(--main-black)';
+    }
+}
+
+document.getElementById('cart-icon').addEventListener('click', function () {
+    if (IsDark) {
+        for (let i = 0; i < allColorChanges.length; i++) {
+            allColorChanges[i].style.color = 'whitesmoke';
+        }
+        for (let i = 0; i < allBackgroundColorChanges.length; i++) {
+            allBackgroundColorChanges[i].style.backgroundColor = 'var(--main-dark)';
+        }
+        for (let i = 0; i < allBorderColorChange.length; i++) {
+            allBorderColorChange[i].style.borderColor = 'whitesmoke';
+        }
+        for (let i = 0; i < allShadowsChange.length; i++) {
+            allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px rgb(43, 43, 43)';
+        }
+        for (let i = 0; i < allBoxsBorder.length; i++) {
+            allBoxsBorder[i].style.borderColor = '#777';
+        }
+        for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
+            allBoxsBackgroundColor[i].style.backgroundColor = '#272727';
+        }
+        for (let i = 0; i < featSSelectors.length; i++) {
+            if(featSSelectors[i].classList.contains('active-light')){
+                featSSelectors[i].classList.remove('active-light')
+                featSSelectors[i].classList.add('active-dark')
+            }
+        }
+        for (let i = 0; i < containerColor.length; i++) {
+            containerColor[i].style.backgroundColor = 'rgb(51 51 51 / 82%)';
+        }
+    }else{
+        for (let i = 0; i < allColorChanges.length; i++) {
+            allColorChanges[i].style.color = 'var(--main-black)';
+        }
+        for (let i = 0; i < allBackgroundColorChanges.length; i++) {
+            allBackgroundColorChanges[i].style.backgroundColor = 'white';
+        }
+        for (let i = 0; i < allBorderColorChange.length; i++) {
+            allBorderColorChange[i].style.borderColor = 'var(--main-black)';
+        }
+        for (let i = 0; i < allShadowsChange.length; i++) {
+            allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px whitesmoke';
+        }
+        for (let i = 0; i < allBoxsBorder.length; i++) {
+            allBoxsBorder[i].style.borderColor = '';
+        }
+        for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
+            allBoxsBackgroundColor[i].style.backgroundColor = 'var(--main-gray)';
+        }
+        for (let i = 0; i < featSSelectors.length; i++) {
+            if(featSSelectors[i].classList.contains('active-dark')){
+                featSSelectors[i].classList.remove('active-dark')
+                featSSelectors[i].classList.add('active-light')
+            }
+        }
+        for (let i = 0; i < containerColor.length; i++) {
+            containerColor[i].style.backgroundColor = 'rgba(255, 255, 255, 0.699)';
+        }
+    }
+})
+document.getElementById('by-and-go-to-cart').addEventListener('click', function () {
+    if (IsDark) {
+        for (let i = 0; i < allColorChanges.length; i++) {
+            allColorChanges[i].style.color = 'whitesmoke';
+        }
+        for (let i = 0; i < allBackgroundColorChanges.length; i++) {
+            allBackgroundColorChanges[i].style.backgroundColor = 'var(--main-dark)';
+        }
+        for (let i = 0; i < allBorderColorChange.length; i++) {
+            allBorderColorChange[i].style.borderColor = 'whitesmoke';
+        }
+        for (let i = 0; i < allShadowsChange.length; i++) {
+            allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px rgb(43, 43, 43)';
+        }
+        for (let i = 0; i < allBoxsBorder.length; i++) {
+            allBoxsBorder[i].style.borderColor = '#777';
+        }
+        for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
+            allBoxsBackgroundColor[i].style.backgroundColor = '#272727';
+        }
+        for (let i = 0; i < featSSelectors.length; i++) {
+            if(featSSelectors[i].classList.contains('active-light')){
+                featSSelectors[i].classList.remove('active-light')
+                featSSelectors[i].classList.add('active-dark')
+            }
+        }
+        for (let i = 0; i < containerColor.length; i++) {
+            containerColor[i].style.backgroundColor = 'rgb(51 51 51 / 82%)';
+        }
+    }else{
+        for (let i = 0; i < allColorChanges.length; i++) {
+            allColorChanges[i].style.color = 'var(--main-black)';
+        }
+        for (let i = 0; i < allBackgroundColorChanges.length; i++) {
+            allBackgroundColorChanges[i].style.backgroundColor = 'white';
+        }
+        for (let i = 0; i < allBorderColorChange.length; i++) {
+            allBorderColorChange[i].style.borderColor = 'var(--main-black)';
+        }
+        for (let i = 0; i < allShadowsChange.length; i++) {
+            allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px whitesmoke';
+        }
+        for (let i = 0; i < allBoxsBorder.length; i++) {
+            allBoxsBorder[i].style.borderColor = '';
+        }
+        for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
+            allBoxsBackgroundColor[i].style.backgroundColor = 'var(--main-gray)';
+        }
+        for (let i = 0; i < featSSelectors.length; i++) {
+            if(featSSelectors[i].classList.contains('active-dark')){
+                featSSelectors[i].classList.remove('active-dark')
+                featSSelectors[i].classList.add('active-light')
+            }
+        }
+        for (let i = 0; i < containerColor.length; i++) {
+            containerColor[i].style.backgroundColor = 'rgba(255, 255, 255, 0.699)';
+        }
+    }
+})
