@@ -629,81 +629,81 @@ const hoverButton = document.getElementsByClassName('hover-button');
 const featSSelectors = document.getElementsByClassName('feat-image-selector');
 const containerColor = document.getElementsByClassName('change-container-color');
 
-window.onload = function (){
-    if(window.localStorage.darkMode === 'ON'){
-        IsDark = true;
-        document.getElementById('display-mode').className = "fa-solid fa-sun change-color hovering";
-        document.head.children[4].innerHTML = `
-        ::-webkit-scrollbar-track {
-            background-color: var(--main-dark);
-            padding: 20px;
-        }`;
-        landingText.src = `./images/home-text-${landingCounter}-dark.png`;
-        for (let i = 0; i < allColorChanges.length; i++) {
-            allColorChanges[i].style.color = 'whitesmoke';
-        }
-        for (let i = 0; i < allBackgroundColorChanges.length; i++) {
-            allBackgroundColorChanges[i].style.backgroundColor = 'var(--main-dark)';
-        }
-        for (let i = 0; i < allBorderColorChange.length; i++) {
-            allBorderColorChange[i].style.borderColor = 'whitesmoke';
-        }
-        for (let i = 0; i < allShadowsChange.length; i++) {
-            allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px rgb(43, 43, 43)';
-        }
-        for (let i = 0; i < allBoxsBorder.length; i++) {
-            allBoxsBorder[i].style.borderColor = '#777';
-        }
-        for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
-            allBoxsBackgroundColor[i].style.backgroundColor = '#272727';
-        }
-        for (let i = 0; i < featSSelectors.length; i++) {
-            if(featSSelectors[i].classList.contains('active-light')){
-                featSSelectors[i].classList.remove('active-light')
-                featSSelectors[i].classList.add('active-dark')
-            }
-        }
-        for (let i = 0; i < containerColor.length; i++) {
-            containerColor[i].style.backgroundColor = 'rgb(51 51 51 / 82%)';
-        }
-    }else{
-        IsDark = false;
-        document.getElementById('display-mode').className = "fa-solid fa-moon change-color hovering";
-        document.head.children[4].innerHTML = `
-        ::-webkit-scrollbar-track {
-            background-color: white;
-            padding: 20px;
-        }`;
-        landingText.src = `./images/home-text-${landingCounter}-light.png`;
-        for (let i = 0; i < allColorChanges.length; i++) {
-            allColorChanges[i].style.color = 'var(--main-black)';
-        }
-        for (let i = 0; i < allBackgroundColorChanges.length; i++) {
-            allBackgroundColorChanges[i].style.backgroundColor = 'white';
-        }
-        for (let i = 0; i < allBorderColorChange.length; i++) {
-            allBorderColorChange[i].style.borderColor = 'var(--main-black)';
-        }
-        for (let i = 0; i < allShadowsChange.length; i++) {
-            allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px whitesmoke';
-        }
-        for (let i = 0; i < allBoxsBorder.length; i++) {
-            allBoxsBorder[i].style.borderColor = '';
-        }
-        for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
-            allBoxsBackgroundColor[i].style.backgroundColor = 'var(--main-gray)';
-        }
-        for (let i = 0; i < featSSelectors.length; i++) {
-            if(featSSelectors[i].classList.contains('active-dark')){
-                featSSelectors[i].classList.remove('active-dark')
-                featSSelectors[i].classList.add('active-light')
-            }
-        }
-        for (let i = 0; i < containerColor.length; i++) {
-            containerColor[i].style.backgroundColor = 'rgba(255, 255, 255, 0.699)';
+
+if(window.localStorage.darkMode === 'ON'){
+    IsDark = true;
+    document.getElementById('display-mode').className = "fa-solid fa-sun change-color hovering";
+    document.head.children[4].innerHTML = `
+    ::-webkit-scrollbar-track {
+        background-color: var(--main-dark);
+        padding: 20px;
+    }`;
+    landingText.src = `./images/home-text-${landingCounter}-dark.png`;
+    for (let i = 0; i < allColorChanges.length; i++) {
+        allColorChanges[i].style.color = 'whitesmoke';
+    }
+    for (let i = 0; i < allBackgroundColorChanges.length; i++) {
+        allBackgroundColorChanges[i].style.backgroundColor = 'var(--main-dark)';
+    }
+    for (let i = 0; i < allBorderColorChange.length; i++) {
+        allBorderColorChange[i].style.borderColor = 'whitesmoke';
+    }
+    for (let i = 0; i < allShadowsChange.length; i++) {
+        allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px rgb(43, 43, 43)';
+    }
+    for (let i = 0; i < allBoxsBorder.length; i++) {
+        allBoxsBorder[i].style.borderColor = '#777';
+    }
+    for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
+        allBoxsBackgroundColor[i].style.backgroundColor = '#272727';
+    }
+    for (let i = 0; i < featSSelectors.length; i++) {
+        if(featSSelectors[i].classList.contains('active-light')){
+            featSSelectors[i].classList.remove('active-light')
+            featSSelectors[i].classList.add('active-dark')
         }
     }
+    for (let i = 0; i < containerColor.length; i++) {
+        containerColor[i].style.backgroundColor = 'rgb(51 51 51 / 82%)';
+    }
+}else{
+    IsDark = false;
+    document.getElementById('display-mode').className = "fa-solid fa-moon change-color hovering";
+    document.head.children[4].innerHTML = `
+    ::-webkit-scrollbar-track {
+        background-color: white;
+        padding: 20px;
+    }`;
+    landingText.src = `./images/home-text-${landingCounter}-light.png`;
+    for (let i = 0; i < allColorChanges.length; i++) {
+        allColorChanges[i].style.color = 'var(--main-black)';
+    }
+    for (let i = 0; i < allBackgroundColorChanges.length; i++) {
+        allBackgroundColorChanges[i].style.backgroundColor = 'white';
+    }
+    for (let i = 0; i < allBorderColorChange.length; i++) {
+        allBorderColorChange[i].style.borderColor = 'var(--main-black)';
+    }
+    for (let i = 0; i < allShadowsChange.length; i++) {
+        allShadowsChange[i].style.boxShadow = '0px 0px 5px 5px whitesmoke';
+    }
+    for (let i = 0; i < allBoxsBorder.length; i++) {
+        allBoxsBorder[i].style.borderColor = '';
+    }
+    for (let i = 0; i < allBoxsBackgroundColor.length; i++) {
+        allBoxsBackgroundColor[i].style.backgroundColor = 'var(--main-gray)';
+    }
+    for (let i = 0; i < featSSelectors.length; i++) {
+        if(featSSelectors[i].classList.contains('active-dark')){
+            featSSelectors[i].classList.remove('active-dark')
+            featSSelectors[i].classList.add('active-light')
+        }
+    }
+    for (let i = 0; i < containerColor.length; i++) {
+        containerColor[i].style.backgroundColor = 'rgba(255, 255, 255, 0.699)';
+    }
 }
+
 
 
 function darkOrLight(){
