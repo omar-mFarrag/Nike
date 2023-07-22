@@ -154,6 +154,10 @@ window.onload = () => {
     for (let j = 0; j < addToCart.length; j++) {
         addToCart[j].setAttribute("onclick", "bayingProd(this);bayMethodOpen();")
     }
+    if(window.localStorage.hasfaved === "true"){
+        document.getElementById('products').innerHTML = window.localStorage.faveProds ;
+        faveList.innerHTML = window.localStorage.faveeeelistooo;
+    }
 }
 
 // This function to get every index for similar indexes in favoritesClassNames array 
@@ -165,9 +169,12 @@ function getAllIndexes(arr, val) {
     return favoritedProducts;
 }
 var favoritedProducts = [];
+var hasFave = false;
 // This function to get the clickedProd position in faveProd array
 // And this function will be called everytime clicked on favorites icon
 function clickedPord(element) {
+    hasFave = true;
+    window.localStorage.setItem('hasfaved', `${hasFave}`)
     element.classList.toggle("FAVORITED"); //To add or remove FAVORITED class name for each prodcut clicked on his favorites icon
     // This loop to add all favorites's classe name in favoritesClassNames array
     for (let i = 0; i < favorites.length; i++) {
@@ -206,6 +213,8 @@ function clickedPord(element) {
     for (let j = 0; j < favorites.length; j++) {
         favoritesClassNames.shift(favorites[j].className);
     }
+    window.localStorage.setItem('faveProds', `${document.getElementById('products').innerHTML}`);
+    window.localStorage.setItem('faveeeelistooo', `${faveList.innerHTML}`);
 }
 // This part for remove products from favourites menu
 function remove(element) {
@@ -215,10 +224,15 @@ function remove(element) {
     if (faveList.childElementCount === 1) {
         faveList.innerHTML = `<p>Favorites menu in empty</p>`;
     }
+    window.localStorage.setItem('faveProds', `${document.getElementById('products').innerHTML}`);
+    window.localStorage.setItem('faveeeelistooo', `${faveList.innerHTML}`);
 }
-
-
-
+if(window.localStorage.hasfaved === "true"){
+    document.getElementById('products').innerHTML = window.localStorage.faveProds ;
+    setTimeout(() => {
+        faveList.innerHTML = window.localStorage.faveeeelistooo;
+    }, 1500);
+}
 // This function created by this JS file with (window.onload function)
 function chageFeat(photo) {
     if (IsDark) {
@@ -239,27 +253,19 @@ function chageFeat(photo) {
         photo.classList.add('active-light');
     }
 }
-
-
-
-
-
 // This for know which prod selected
 var buyingProdImage = document.getElementById('bying-prod-image');
 var buyingProdPrice = document.getElementById('price');
 var buyingShoesName = document.getElementById('shoes-name');
-
 var BuyingPrice = 0;
 var BuyingOldPrice = 0;
-
 var prodName = "";
 var sizeSelected = 38;
-
 var totalPrice = 0;
 var totalPriceBeforDiscount = 0;
-
 var cartCounter = document.getElementById('cart-counter');
-
+var hasInCart = false;
+// this for know which type of products in byment methode
 function bayingProd(element) {
     if (element.value === 'nikeShoes') {
         buyingShoesName.innerHTML = `<span style="color: var(--main-orange);">N</span>ike <span style="color: var(--main-orange);">S</span>hoes`;
@@ -267,13 +273,10 @@ function bayingProd(element) {
         prodPrice = element.parentElement.children[3].innerHTML.slice(1, 7);
         prodOldPrice = element.parentElement.children[3].children[0].innerHTML.slice(1, 7);
         buyingProdPrice.innerHTML = `$${prodPrice} <span id="old-price">$${prodOldPrice}</span>`;
-
         BuyingPrice = buyingProdPrice.innerHTML.slice(1, 7);
         BuyingOldPrice = buyingProdPrice.children[0].innerHTML.slice(1, 7);
-
         totalPrice = 120.99;
         totalPriceBeforDiscount = 150.99;
-
         prodName = "Nike Shoes";
     } else if (element.value === 'airMax') {
         buyingShoesName.innerHTML = `<span style="color: var(--main-orange);">N</span>ike <span style="color: var(--main-orange);">A</span>irmax`;
@@ -281,19 +284,13 @@ function bayingProd(element) {
         prodPrice = element.parentElement.children[0].children[3].innerHTML.slice(1, 6);
         prodOldPrice = element.parentElement.children[0].children[3].children[0].innerHTML.slice(1, 7);
         buyingProdPrice.innerHTML = `$${prodPrice} <span id="old-price">$${prodOldPrice}</span>`;
-
         BuyingPrice = buyingProdPrice.innerHTML.slice(1, 6);
         BuyingOldPrice = buyingProdPrice.children[0].innerHTML.slice(1, 7);
-
         totalPrice = 80.99;
         totalPriceBeforDiscount = 120.99;
-
         prodName = "Nike Airmax";
     }
 }
-
-
-
 // to select size function
 function selectSize(size) {
     for (let i = 0; i < size.parentElement.children.length; i++) {
@@ -314,8 +311,6 @@ function selectSize(size) {
 var amountOnBayment = document.getElementById("amount");
 var amountMinusB = document.getElementById("amountMinus");
 var amountOnBaymentCounter = 1;
-
-
 function amountMinus() {
     if (amountOnBaymentCounter <= 1) {
         amountOnBaymentCounter = 1;
@@ -340,19 +335,14 @@ function amountPlus() {
     amountOnBayment.innerHTML = amountOnBaymentCounter;
     amountMinusB.style.opacity = 1;
     buyingProdPrice.innerHTML = `$${(BuyingPrice * amountOnBaymentCounter).toFixed(2)} <span id="old-price">$${(BuyingOldPrice * amountOnBaymentCounter).toFixed(2)}</span>`;
-
     totalPrice = (BuyingPrice * amountOnBaymentCounter).toFixed(2);
     totalPriceBeforDiscount = (BuyingOldPrice * amountOnBaymentCounter).toFixed(2);
-
     console.log(totalPrice);
     console.log(totalPriceBeforDiscount);
 }
-
-
 // This part for displaying Bay method
 const baymentMethod = document.getElementById('by-method-container');
 document.getElementById('by-method-container').style.width = `${browserWidth}px`;
-
 // This function for close baymet method whene click on X mark
 function bayMethodClose() {
     baymentMethod.style.display = "none";
@@ -378,11 +368,8 @@ function bayMethodOpen() {
     amountOnBayment.innerHTML = amountOnBaymentCounter;
     amountMinusB.style.opacity = .5;
 }
-
 var totalPriceInCart = 0;
-
 function addProdInCart() {
-
     cartList.innerHTML +=
         `
     <div class="prodBuoght change-background-color change-box-border-color">
@@ -397,12 +384,13 @@ function addProdInCart() {
         <i onmouseenter="mouseenterontrush(this)" onmouseleave="mouseleaveontrush(this)" class="fa-solid fa-trash-can change-color" id="remove-from-cart" onclick="removeFormCart(this)"></i>
     </div>
     `;
-
     totalPriceInCart += Number(totalPrice);
-
     document.getElementById('totalInCart').innerHTML = `<span style="color: var(--main-orange);">T</span >otal: $${totalPriceInCart.toFixed(2)}`;
+    hasInCart = true;
+    window.localStorage.setItem('hasinCart', `${hasInCart}`);
+    window.localStorage.setItem('totalPrice', `${totalPriceInCart.toFixed(2)}`)
+    window.localStorage.setItem('cartlist', `${document.getElementById('cart-list').innerHTML}`);
 }
-
 var removedPrice = 0;
 function removeFormCart(trash) {
     removedPrice = trash.parentElement.children[0].children[1].children[2].innerHTML.slice(8, 14);
@@ -410,47 +398,47 @@ function removeFormCart(trash) {
     totalPriceInCart -= Number(removedPrice);
     document.getElementById('totalInCart').innerHTML = `<span style="color: var(--main-orange);">T</span >otal: $${totalPriceInCart.toFixed(2)}`;
     cartCounterChanger();
-
+    
+    
+    window.localStorage.setItem('totalPrice', `${totalPriceInCart.toFixed(2)}`)
+    window.localStorage.setItem('cartlist', `${document.getElementById('cart-list').innerHTML}`);
 }
-
 function ClearCart() {
     cartList.innerHTML = ``;
     totalPriceInCart = 0;
     document.getElementById('totalInCart').innerHTML = `<span style="color: var(--main-orange);">T</span >otal: $${totalPriceInCart.toFixed(2)}`;
     cartCounterChanger();
+    
+    window.localStorage.setItem('totalPrice', `${totalPriceInCart.toFixed(2)}`)
+    window.localStorage.setItem('cartlist', `${document.getElementById('cart-list').innerHTML}`);
 }
-
-
-
 function OpenBuyFromFave(element) {
     faveListContainer.style.display = "none";
-
     buyingShoesName.innerHTML = `<span style="color: var(--main-orange);">N</span>ike <span style="color: var(--main-orange);">S</span>hoes`;
     buyingProdImage.src = element.parentElement.children[1].src;
     prodPrice = element.parentElement.children[3].innerHTML.slice(1, 7);
     prodOldPrice = element.parentElement.children[3].children[0].innerHTML.slice(1, 7);
     buyingProdPrice.innerHTML = `$${prodPrice} <span id="old-price">$${prodOldPrice}</span>`;
-
     BuyingPrice = buyingProdPrice.innerHTML.slice(1, 7);
     BuyingOldPrice = buyingProdPrice.children[0].innerHTML.slice(1, 7);
-
     totalPrice = 120.99;
     totalPriceBeforDiscount = 150.99;
-
     prodName = "Nike Shoes";
-
     baymentMethod.style.display = "flex";
     amountOnBayment.innerHTML = amountOnBaymentCounter;
     amountMinusB.style.opacity = .5;
 }
-
 function cartCounterChanger() {
     cartCounter.innerHTML = cartList.children.length;
+    window.localStorage.setItem('cartCount', `${cartCounter.innerHTML}`);
 }
 
-
-
-
+if (window.localStorage.hasinCart === 'true') {
+    cartCounter.innerHTML = window.localStorage.cartCount ;
+    document.getElementById('cart-list').innerHTML = window.localStorage.cartlist ;
+    totalPriceInCart = Number(window.localStorage.totalPrice)
+    document.getElementById('totalInCart').innerHTML = `<span style="color: var(--main-orange);">T</span >otal: $${totalPriceInCart.toFixed(2)}` ;
+}
 
 // Login page script
 document.getElementById("login-page-container").style.width = `${browserWidth}px`;
